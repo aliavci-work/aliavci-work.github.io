@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Ali Avcı | FP&A, Business Intelligence & Applied AI</title>
+
+  <meta
+    name="description"
+    content="Portfolio of Ali Avcı — FP&A, business intelligence, reporting automation and applied AI projects."
+  >
+
+  <style>
+    :root {
+      --background: #f5f7fa;
+      --surface: #ffffff;
+      --text: #172033;
+      --muted: #5e6b7e;
+      --primary: #155eef;
+      --primary-dark: #0f46b8;
+      --border: #dfe5ec;
+      --tag: #eaf1ff;
+      --max-width: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(92%, var(--max-width));
+      margin: 0 auto;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav {
+      min-height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .brand {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .hero {
+      padding: 110px 0 90px;
+    }
+
+    .eyebrow {
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      max-width: 850px;
+      font-size: clamp(2.6rem, 7vw, 5.5rem);
+      line-height: 1.04;
+      letter-spacing: -0.05em;
+      margin-bottom: 26px;
+    }
+
+    .hero-description {
+      max-width: 720px;
+      font-size: 1.2rem;
+      color: var(--muted);
+      margin-bottom: 34px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 13px 21px;
+      border-radius: 8px;
+      font-weight: 700;
+      border: 1px solid var(--primary);
+    }
+
+    .button-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .button-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .button-secondary {
+      background: transparent;
+      color: var(--primary);
+    }
+
+    section {
+      padding: 80px 0;
+    }
+
+    .section-heading {
+      margin-bottom: 36px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 10px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      max-width: 680px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+      font-size: 1.3rem;
+    }
+
+    .card p {
+      color: var(--muted);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .tag {
+      background: var(--tag);
+      color: var(--primary-dark);
+      border-radius: 999px;
+      padding: 6px 11px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 290px;
+    }
+
+    .project-type {
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+
+    .project-card .tags {
+      margin-top: auto;
+      padding-top: 24px;
+    }
+
+    .contact-box {
+      background: var(--text);
+      color: #ffffff;
+      border-radius: 18px;
+      padding: 48px;
+    }
+
+    .contact-box p {
+      color: #cbd5e1;
+      max-width: 680px;
+      margin: 14px 0 26px;
+    }
+
+    footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 760px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding: 80px 0 60px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 60px 0;
+      }
+
+      .contact-box {
+        padding: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="container">
+      <a class="brand" href="#">Ali Avcı</a>
+
+      <div class="nav-links">
+        <a href="#expertise">Expertise</a>
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <p class="eyebrow">FP&A · Business Intelligence · Automation · Applied AI</p>
+
+        <h1>Turning financial and operational data into decisions.</h1>
+
+        <p class="hero-description">
+          I am an FP&A and business intelligence professional focused on
+          financial planning, management reporting, Power BI solutions,
+          reporting automation and applied artificial intelligence.
+        </p>
+
+        <div class="buttons">
+          <a class="button button-primary" href="#projects">View selected work</a>
+
+          <a
+            class="button button-secondary"
+            href="https://github.com/aliavci-work"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub profile
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="expertise">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Areas of expertise</h2>
+          <p>
+            A combination of finance, analytics and technology used to solve
+            real reporting and decision-support problems.
+          </p>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <h3>Financial Planning & Analysis</h3>
+            <p>
+              Budgeting, forecasting, performance tracking, variance analysis
+              and management reporting.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Business Intelligence</h3>
+            <p>
+              Power BI dashboards, data models, DAX measures and executive
+              reporting solutions.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Reporting Automation</h3>
+            <p>
+              Python, SQL and Excel-based workflows that reduce manual work and
+              improve reporting consistency.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Applied Artificial Intelligence</h3>
+            <p>
+              AI evaluation, workflow design and practical applications of
+              artificial intelligence in business processes.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Selected projects</h2>
+          <p>
+            Case studies will focus on the business problem, analytical
+            approach, implementation and measurable outcome.
+          </p>
+        </div>
+
+        <div class="grid">
+          <article class="card project-card">
+            <p class="project-type">Business Intelligence</p>
+            <h3>Executive Production and Sales Performance Dashboard</h3>
+            <p>
+              A multi-page Power BI reporting solution designed to monitor
+              production, commissions, sales performance, conversion rates,
+              targets and operational risks.
+            </p>
+
+            <div class="tags">
+              <span class="tag">Power BI</span>
+              <span class="tag">DAX</span>
+              <span class="tag">Data Modeling</span>
+              <span class="tag">Management Reporting</span>
+            </div>
+          </article>
+
+          <article class="card project-card">
+            <p class="project-type">Automation</p>
+            <h3>Automated Operational Reporting Workflows</h3>
+            <p>
+              Python and SQL workflows that generate structured Excel reports
+              and distribute scheduled operational updates automatically.
+            </p>
+
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">SQL</span>
+              <span class="tag">Excel</span>
+              <span class="tag">Email Automation</span>
+            </div>
+          </article>
+
+          <article class="card project-card">
+            <p class="project-type">FP&A</p>
+            <h3>Target versus Actual Performance Reporting</h3>
+            <p>
+              Financial and operational performance reporting designed to
+              compare targets with actual results across periods, business
+              units and product categories.
+            </p>
+
+            <div class="tags">
+              <span class="tag">FP&A</span>
+              <span class="tag">Power BI</span>
+              <span class="tag">Variance Analysis</span>
+            </div>
+          </article>
+
+          <article class="card project-card">
+            <p class="project-type">Applied AI</p>
+            <h3>Artificial Intelligence Projects</h3>
+            <p>
+              Applied AI and model-evaluation work focused on practical business
+              use cases, quality assessment and structured analytical judgment.
+            </p>
+
+            <div class="tags">
+              <span class="tag">AI Evaluation</span>
+              <span class="tag">Workflow Design</span>
+              <span class="tag">Business Applications</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-heading">
+          <h2>About</h2>
+          <p>
+            I combine finance experience with business intelligence,
+            automation and data analysis to build reporting systems that help
+            teams understand performance and take action.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="contact-box">
+          <h2>Let’s connect</h2>
+
+          <p>
+            I am interested in international opportunities across FP&A,
+            business intelligence, financial analytics, reporting automation
+            and applied AI.
+          </p>
+
+          <a
+            class="button button-primary"
+            href="https://github.com/aliavci-work"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View GitHub
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © 2026 Ali Avcı. Portfolio under development.
+    </div>
+  </footer>
+</body>
+</html>
