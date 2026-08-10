@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>PSA Power BI Report | Ali Avcı</title>
+
+  <meta
+    name="description"
+    content="A Power BI case study by Ali Avcı covering production, commissions, sales performance, hit ratio, loss reasons, pending business and target-versus-actual analysis."
+  >
+
+  <style>
+    :root {
+      --background: #f5f7fa;
+      --surface: #ffffff;
+      --text: #172033;
+      --muted: #5e6b7e;
+      --primary: #155eef;
+      --primary-dark: #0f46b8;
+      --border: #dfe5ec;
+      --tag: #eaf1ff;
+      --max-width: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(92%, var(--max-width));
+      margin: 0 auto;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav {
+      min-height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .brand {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .language-switch {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      background: var(--surface);
+    }
+
+    .language-switch strong {
+      color: var(--primary);
+    }
+
+    .language-switch a {
+      color: var(--muted);
+    }
+
+    .language-switch a:hover {
+      color: var(--primary);
+    }
+
+    .hero {
+      padding: 100px 0 70px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 30px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .eyebrow {
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      max-width: 900px;
+      font-size: clamp(2.7rem, 7vw, 5rem);
+      line-height: 1.04;
+      letter-spacing: -0.045em;
+      margin-bottom: 28px;
+    }
+
+    .hero-description {
+      max-width: 800px;
+      font-size: 1.2rem;
+      color: var(--muted);
+    }
+
+    section {
+      padding: 72px 0;
+    }
+
+    .section-heading {
+      margin-bottom: 32px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 10px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      max-width: 760px;
+    }
+
+    .snapshot {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 42px;
+    }
+
+    .snapshot-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+    }
+
+    .snapshot-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-bottom: 7px;
+    }
+
+    .snapshot-card strong {
+      font-size: 1rem;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 30px;
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+      font-size: 1.3rem;
+    }
+
+    .card p {
+      color: var(--muted);
+    }
+
+    .feature-list {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+    }
+
+    .feature-list li {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 22px;
+    }
+
+    .feature-list strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .feature-list span {
+      color: var(--muted);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 26px;
+    }
+
+    .tag {
+      background: var(--tag);
+      color: var(--primary-dark);
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 0.83rem;
+      font-weight: 700;
+    }
+
+    .visual-placeholder {
+      margin-top: 30px;
+      min-height: 390px;
+      border: 1px dashed #b9c5d6;
+      border-radius: 16px;
+      background: var(--surface);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 30px;
+      color: var(--muted);
+    }
+
+    .visual-placeholder strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .impact-box {
+      background: var(--text);
+      color: #ffffff;
+      border-radius: 18px;
+      padding: 46px;
+    }
+
+    .impact-box p {
+      color: #cbd5e1;
+      max-width: 800px;
+      margin-top: 14px;
+    }
+
+    .contact-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 13px 21px;
+      border-radius: 8px;
+      font-weight: 700;
+      border: 1px solid var(--primary);
+    }
+
+    .button-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .button-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .button-light {
+      color: #ffffff;
+      border-color: #ffffff;
+    }
+
+    .button-light:hover {
+      background: #ffffff;
+      color: var(--text);
+    }
+
+    footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 850px) {
+      .nav-links {
+        display: none;
+      }
+
+      .snapshot {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .snapshot {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 70px 0 50px;
+      }
+
+      section {
+        padding: 55px 0;
+      }
+
+      .impact-box {
+        padding: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <nav class="container">
+      <a class="brand" href="/">Ali Avcı</a>
+
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#overview">Overview</a>
+          <a href="#solution">Solution</a>
+          <a href="#capabilities">Capabilities</a>
+          <a href="#visuals">Visuals</a>
+        </div>
+
+        <div class="language-switch">
+          <strong>EN</strong>
+          <span>|</span>
+          <a href="/tr/">TR</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="container">
+
+        <a class="back-link" href="/#projects">
+          ← Back to selected projects
+        </a>
+
+        <p class="eyebrow">
+          POWER BI · BUSINESS INTELLIGENCE · MANAGEMENT REPORTING
+        </p>
+
+        <h1>
+          Executive Production & Sales Performance Reporting
+        </h1>
+
+        <p class="hero-description">
+          A multi-page Power BI solution built to bring production,
+          commission, portfolio, sales conversion, loss analysis, pending
+          business and target-versus-actual performance into a single
+          management reporting environment.
+        </p>
+
+        <div class="snapshot">
+          <div class="snapshot-card">
+            <span>Project Type</span>
+            <strong>Business Intelligence</strong>
+          </div>
+
+          <div class="snapshot-card">
+            <span>Primary Tool</span>
+            <strong>Microsoft Power BI</strong>
+          </div>
+
+          <div class="snapshot-card">
+            <span>Focus</span>
+            <strong>Performance & Decision Support</strong>
+          </div>
+
+          <div class="snapshot-card">
+            <span>Role</span>
+            <strong>Design, Modeling & Reporting</strong>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="overview">
+      <div class="container">
+
+        <div class="section-heading">
+          <h2>Business problem</h2>
+
+          <p>
+            Management reporting required several operational and financial
+            perspectives to be analyzed together rather than through isolated
+            reports.
+          </p>
+        </div>
+
+        <div class="content-grid">
+
+          <article class="card">
+            <h3>Fragmented performance views</h3>
+
+            <p>
+              Production, commissions, portfolio development, sales outcomes
+              and target performance needed to be viewed through a consistent
+              reporting structure.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Need for drill-down analysis</h3>
+
+            <p>
+              High-level KPIs alone were not sufficient. Users needed the
+              ability to move from executive summaries into branches,
+              producers, insurance companies, customers and individual
+              transaction-level detail.
+            </p>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section id="solution">
+      <div class="container">
+
+        <div class="section-heading">
+          <h2>The solution</h2>
+
+          <p>
+            I developed a structured Power BI reporting environment that
+            connects management-level KPIs with detailed operational analysis.
+          </p>
+        </div>
+
+        <ul class="feature-list">
+
+          <li>
+            <strong>Production & Portfolio Performance</strong>
+            <span>
+              Net premium, commissions, customer volumes, portfolio sources
+              and performance-year analysis.
+            </span>
+          </li>
+
+          <li>
+            <strong>Commission Analysis</strong>
+            <span>
+              Commission values and commission rates by performance period,
+              insurance branch and portfolio source.
+            </span>
+          </li>
+
+          <li>
+            <strong>Hit Ratio Analysis</strong>
+            <span>
+              Monthly and cumulative conversion performance for internal and
+              external business by insurance branch.
+            </span>
+          </li>
+
+          <li>
+            <strong>Loss Reason Analysis</strong>
+            <span>
+              Analysis of unsuccessful sales by reason, transaction count and
+              premium value, supported by detailed drill-down reporting.
+            </span>
+          </li>
+
+          <li>
+            <strong>Pending Sales Monitoring</strong>
+            <span>
+              Transaction-level visibility into business still waiting for a
+              sales outcome.
+            </span>
+          </li>
+
+          <li>
+            <strong>Major Won & Lost Business</strong>
+            <span>
+              Visibility into high-value renewals and material sales outcomes
+              requiring management attention.
+            </span>
+          </li>
+
+          <li>
+            <strong>Target versus Actual Performance</strong>
+            <span>
+              Comparison of premium and commission targets against actual
+              performance across insurance branches.
+            </span>
+          </li>
+
+        </ul>
+
+      </div>
+    </section>
+
+    <section id="capabilities">
+      <div class="container">
+
+        <div class="section-heading">
+          <h2>Capabilities demonstrated</h2>
+
+          <p>
+            The project combines financial understanding, data modeling and
+            business intelligence development rather than focusing only on
+            dashboard visualization.
+          </p>
+        </div>
+
+        <div class="tags">
+          <span class="tag">Power BI</span>
+          <span class="tag">DAX</span>
+          <span class="tag">Data Modeling</span>
+          <span class="tag">Financial Analysis</span>
+          <span class="tag">Management Reporting</span>
+          <span class="tag">KPI Design</span>
+          <span class="tag">Variance Analysis</span>
+          <span class="tag">Sales Analytics</span>
+          <span class="tag">Portfolio Analysis</span>
+          <span class="tag">Drill-down Reporting</span>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="visuals">
+      <div class="container">
+
+        <div class="section-heading">
+          <h2>Selected report views</h2>
+
+          <p>
+            A small number of representative screens will be used here rather
+            than publishing every report page.
+          </p>
+        </div>
+
+        <div class="visual-placeholder">
+          <div>
+            <strong>Executive Production Overview</strong>
+            Power BI screenshot will be added in the next step.
+          </div>
+        </div>
+
+        <div class="visual-placeholder">
+          <div>
+            <strong>Hit Ratio Analysis</strong>
+            Power BI screenshot will be added in the next step.
+          </div>
+        </div>
+
+        <div class="visual-placeholder">
+          <div>
+            <strong>Loss Reason Analysis</strong>
+            Power BI screenshot will be added in the next step.
+          </div>
+        </div>
+
+        <div class="visual-placeholder">
+          <div>
+            <strong>Target versus Actual Performance</strong>
+            Power BI screenshot will be added in the next step.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+
+        <div class="impact-box">
+          <h2>Decision-support value</h2>
+
+          <p>
+            The reporting structure creates a single analytical view across
+            production, commissions, sales performance and targets while still
+            allowing users to investigate the underlying operational detail.
+            Quantified business-impact metrics will only be added where they
+            can be supported by project evidence.
+          </p>
+
+          <div class="contact-buttons">
+            <a
+              class="button button-primary"
+              href="https://www.linkedin.com/in/aliavcii/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Connect on LinkedIn
+            </a>
+
+            <a
+              class="button button-light"
+              href="mailto:aliavci@workmail.com"
+            >
+              aliavci@workmail.com
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      © 2026 Ali Avcı · FP&A · Business Intelligence · Automation · Applied AI
+    </div>
+  </footer>
+
+</body>
+</html>
