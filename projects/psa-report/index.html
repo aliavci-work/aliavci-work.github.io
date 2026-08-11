@@ -246,24 +246,57 @@
       font-weight: 700;
     }
 
-    .visual-placeholder {
+    .report-gallery {
+      display: grid;
+      gap: 34px;
       margin-top: 30px;
-      min-height: 390px;
-      border: 1px dashed #b9c5d6;
-      border-radius: 16px;
-      background: var(--surface);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 30px;
-      color: var(--muted);
     }
 
-    .visual-placeholder strong {
+    .report-visual {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .report-image-link {
       display: block;
-      color: var(--text);
-      margin-bottom: 8px;
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .report-image-link img {
+      display: block;
+      width: 100%;
+      height: auto;
+      transition: transform 0.25s ease;
+    }
+
+    .report-image-link:hover img {
+      transform: scale(1.01);
+    }
+
+    .report-caption {
+      padding: 22px 24px 25px;
+      border-top: 1px solid var(--border);
+    }
+
+    .report-caption h3 {
+      font-size: 1.25rem;
+      margin-bottom: 7px;
+    }
+
+    .report-caption p {
+      color: var(--muted);
+      max-width: 880px;
+    }
+
+    .view-full {
+      display: inline-block;
+      margin-top: 12px;
+      color: var(--primary);
+      font-size: 0.9rem;
+      font-weight: 700;
     }
 
     .impact-box {
@@ -349,6 +382,10 @@
 
       .impact-box {
         padding: 30px;
+      }
+
+      .report-caption {
+        padding: 18px;
       }
     }
   </style>
@@ -578,37 +615,150 @@
           <h2>Selected report views</h2>
 
           <p>
-            A small number of representative screens will be used here rather
-            than publishing every report page.
+            Four representative report views are shown below to demonstrate
+            the breadth of the solution without publishing every report page.
+            Click any image to view it at full resolution.
           </p>
         </div>
 
-        <div class="visual-placeholder">
-          <div>
-            <strong>Executive Production Overview</strong>
-            Power BI screenshot will be added in the next step.
-          </div>
-        </div>
+        <div class="report-gallery">
 
-        <div class="visual-placeholder">
-          <div>
-            <strong>Hit Ratio Analysis</strong>
-            Power BI screenshot will be added in the next step.
-          </div>
-        </div>
+          <article class="report-visual">
+            <a
+              class="report-image-link"
+              href="assets/01-executive-production-overview.png"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="assets/01-executive-production-overview.png"
+                alt="Power BI executive production overview showing net premium, commission, portfolio sources and performance-year analysis"
+                loading="lazy"
+              >
+            </a>
 
-        <div class="visual-placeholder">
-          <div>
-            <strong>Loss Reason Analysis</strong>
-            Power BI screenshot will be added in the next step.
-          </div>
-        </div>
+            <div class="report-caption">
+              <h3>Executive Production Overview</h3>
 
-        <div class="visual-placeholder">
-          <div>
-            <strong>Target versus Actual Performance</strong>
-            Power BI screenshot will be added in the next step.
-          </div>
+              <p>
+                Executive-level production and portfolio view combining net
+                premium, commissions, commission rate, performance-year
+                analysis, branch performance and portfolio-source breakdowns.
+              </p>
+
+              <a
+                class="view-full"
+                href="assets/01-executive-production-overview.png"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View full-size report ↗
+              </a>
+            </div>
+          </article>
+
+          <article class="report-visual">
+            <a
+              class="report-image-link"
+              href="assets/02-hit-ratio-analysis.png"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="assets/02-hit-ratio-analysis.png"
+                alt="Power BI hit ratio analysis showing monthly and cumulative internal and external sales conversion performance"
+                loading="lazy"
+              >
+            </a>
+
+            <div class="report-caption">
+              <h3>Hit Ratio Analysis</h3>
+
+              <p>
+                Monthly and cumulative sales-conversion reporting comparing
+                successful and unsuccessful transactions across internal and
+                external business and insurance branches.
+              </p>
+
+              <a
+                class="view-full"
+                href="assets/02-hit-ratio-analysis.png"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View full-size report ↗
+              </a>
+            </div>
+          </article>
+
+          <article class="report-visual">
+            <a
+              class="report-image-link"
+              href="assets/03-loss-reason-analysis.png"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="assets/03-loss-reason-analysis.png"
+                alt="Power BI loss reason analysis showing unsuccessful sales reasons by premium value and transaction count"
+                loading="lazy"
+              >
+            </a>
+
+            <div class="report-caption">
+              <h3>Loss Reason Analysis</h3>
+
+              <p>
+                Root-cause view of unsuccessful sales, measuring loss reasons
+                through both premium value and transaction count while
+                distinguishing internal and external business.
+              </p>
+
+              <a
+                class="view-full"
+                href="assets/03-loss-reason-analysis.png"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View full-size report ↗
+              </a>
+            </div>
+          </article>
+
+          <article class="report-visual">
+            <a
+              class="report-image-link"
+              href="assets/04-target-vs-actual-performance.png"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="assets/04-target-vs-actual-performance.png"
+                alt="Power BI target versus actual performance report comparing premium and commission targets against actual results"
+                loading="lazy"
+              >
+            </a>
+
+            <div class="report-caption">
+              <h3>Target versus Actual Performance</h3>
+
+              <p>
+                FP&A-oriented performance view comparing premium and
+                commission targets with actual results and achievement rates
+                across insurance branches.
+              </p>
+
+              <a
+                class="view-full"
+                href="assets/04-target-vs-actual-performance.png"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View full-size report ↗
+              </a>
+            </div>
+          </article>
+
         </div>
 
       </div>
