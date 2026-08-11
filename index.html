@@ -280,6 +280,35 @@
       padding-top: 24px;
     }
 
+    .project-link {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .project-link .project-card {
+      height: 100%;
+      cursor: pointer;
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .project-link:hover .project-card {
+      transform: translateY(-4px);
+      border-color: #b7c8e8;
+      box-shadow: 0 12px 28px rgba(23, 32, 51, 0.08);
+    }
+
+    .case-study-link {
+      display: inline-block;
+      margin-top: 18px;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
     .contact-box {
       background: var(--text);
       color: #ffffff;
@@ -461,28 +490,39 @@
         </div>
 
         <div class="grid">
-          <article class="card project-card">
-            <p class="project-type">
-              Business Intelligence
-            </p>
 
-            <h3>
-              Executive Production and Sales Performance Dashboard
-            </h3>
+          <a
+            class="project-link"
+            href="/projects/psa-report/"
+            aria-label="View Executive Production and Sales Performance Dashboard case study"
+          >
+            <article class="card project-card">
+              <p class="project-type">
+                Business Intelligence
+              </p>
 
-            <p>
-              A multi-page Power BI reporting solution designed to monitor
-              production, commissions, sales performance, conversion rates,
-              targets and operational risks.
-            </p>
+              <h3>
+                Executive Production and Sales Performance Dashboard
+              </h3>
 
-            <div class="tags">
-              <span class="tag">Power BI</span>
-              <span class="tag">DAX</span>
-              <span class="tag">Data Modeling</span>
-              <span class="tag">Management Reporting</span>
-            </div>
-          </article>
+              <p>
+                A multi-page Power BI reporting solution designed to monitor
+                production, commissions, sales performance, conversion rates,
+                targets and operational risks.
+              </p>
+
+              <div class="tags">
+                <span class="tag">Power BI</span>
+                <span class="tag">DAX</span>
+                <span class="tag">Data Modeling</span>
+                <span class="tag">Management Reporting</span>
+              </div>
+
+              <span class="case-study-link">
+                View case study →
+              </span>
+            </article>
+          </a>
 
           <article class="card project-card">
             <p class="project-type">
