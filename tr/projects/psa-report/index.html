@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>PSA Power BI Raporu | Ali Avcı</title>
+
+  <meta
+    name="description"
+    content="Ali Avcı tarafından geliştirilen; üretim, komisyon, satış performansı, hit ratio, olumsuz nedenler ve hedef-gerçekleşen analizlerini kapsayan Power BI vaka çalışması."
+  >
+
+  <link
+    rel="canonical"
+    href="https://aliavci-work.github.io/tr/projects/psa-report/"
+  >
+
+  <link
+    rel="alternate"
+    hreflang="en"
+    href="https://aliavci-work.github.io/projects/psa-report/"
+  >
+
+  <link
+    rel="alternate"
+    hreflang="tr"
+    href="https://aliavci-work.github.io/tr/projects/psa-report/"
+  >
+
+  <style>
+    :root {
+      --background: #f5f7fa;
+      --surface: #ffffff;
+      --text: #172033;
+      --muted: #5e6b7e;
+      --primary: #155eef;
+      --primary-dark: #0f46b8;
+      --border: #dfe5ec;
+      --tag: #eaf1ff;
+      --max-width: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(92%, var(--max-width));
+      margin: 0 auto;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav {
+      min-height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .brand {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .language-switch {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      background: var(--surface);
+    }
+
+    .language-switch strong {
+      color: var(--primary);
+    }
+
+    .language-switch a {
+      color: var(--muted);
+    }
+
+    .language-switch a:hover {
+      color: var(--primary);
+    }
+
+    .hero {
+      padding: 100px 0 70px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 30px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .eyebrow {
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      max-width: 900px;
+      font-size: clamp(2.7rem, 7vw, 5rem);
+      line-height: 1.04;
+      letter-spacing: -0.045em;
+      margin-bottom: 28px;
+    }
+
+    .hero-description {
+      max-width: 800px;
+      font-size: 1.2rem;
+      color: var(--muted);
+    }
+
+    section {
+      padding: 72px 0;
+    }
+
+    .section-heading {
+      margin-bottom: 32px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 10px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      max-width: 760px;
+    }
+
+    .snapshot {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 42px;
+    }
+
+    .snapshot-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+    }
+
+    .snapshot-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-bottom: 7px;
+    }
+
+    .snapshot-card strong {
+      font-size: 1rem;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 30px;
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+      font-size: 1.3rem;
+    }
+
+    .card p {
+      color: var(--muted);
+    }
+
+    .feature-list {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+    }
+
+    .feature-list li {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 22px;
+    }
+
+    .feature-list strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .feature-list span {
+      color: var(--muted);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 26px;
+    }
+
+    .tag {
+      background: var(--tag);
+      color: var(--primary-dark);
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 0.83rem;
+      font-weight: 700;
+    }
+
+    .report-gallery {
+      display: grid;
+      gap: 34px;
+      margin-top: 30px;
+    }
+
+    .report-visual {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .report-image-link {
+      display: block;
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .report-image-link img {
+      display: block;
+      width: 100%;
+      height: auto;
+      transition: transform 0.25s ease;
+    }
+
+    .report-image-link:hover img {
+      transform: scale(1.01);
+    }
+
+    .report-caption {
+      padding: 22px 24px 25px;
+      border-top: 1px solid var(--border);
+    }
+
+    .report-caption h3 {
+      font-size: 1.25rem;
+      margin-bottom: 7px;
+    }
+
+    .report-caption p {
+      color: var(--muted);
+      max-width: 880px;
+    }
+
+    .view-full {
+      display: inline-block;
+      margin-top: 12px;
+      color: var(--primary);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .impact-box {
+      background: var(--text);
+      color: #ffffff;
+      border-radius: 18px;
+      padding: 46px;
+    }
+
+    .impact-box p {
+      color: #cbd5e1;
+      max-width: 800px;
+      margin-top: 14px;
+    }
+
+    .contact-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 13px 21px;
+      border-radius: 8px;
+      font-weight: 700;
+      border: 1px solid var(--primary);
+    }
+
+    .button-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .button-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .button-light {
+      color: #ffffff;
+      border-color: #ffffff;
+    }
+
+    .button-light:hover {
+      background: #ffffff;
+      color: var(--text);
+    }
+
+    footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 850px) {
+      .nav-links {
+        display: none;
+      }
+
+      .snapshot {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .snapshot {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 70px 0 50px;
+      }
+
+      section {
+        padding: 55px 0;
+      }
+
+      .impact-box {
+        padding: 30px;
+      }
+
+      .report-caption {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <nav class="container">
+      <a class="brand" href="/tr/">Ali Avcı</a>
+
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#genel-bakis">Genel Bakış</a>
+          <a href="#cozum">Çözüm</a>
+          <a href="#yetkinlikler">Yetkinlikler</a>
+          <a href="#gorseller">Görseller</a>
+        </div>
+
+        <div class="language-switch">
+          <a href="/projects/psa-report/">EN</a>
+          <span>|</span>
+          <strong>TR</strong>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="container">
+
+        <a class="back-link" href="/tr/#projeler">
+          ← Seçilmiş projelere dön
+        </a>
+
+        <p class="eyebrow">
+          POWER BI · İŞ ZEKÂSI · YÖNETİM RAPORLAMASI
+        </p>
+
+        <h1>
+          Yönetici Üretim ve Satış Performansı Raporlaması
+        </h1>
+
+        <p class="hero-description">
+          Üretim, komisyon, portföy, satış dönüşümü, olumsuz satış nedenleri,
+          bekleyen işler ve hedef-gerçekleşen performansını tek bir yönetim
+          raporlama ortamında bir araya getiren çok sayfalı Power BI çözümü.
+        </p>
+
+        <div class="snapshot">
+          <div class="snapshot-card">
+            <span>Proje Türü</span>
+            <strong>İş Zekâsı</strong>
+          </div>
+
+          <div class="snapshot-card">
+            <span>Ana Araç</span>
+            <strong>Microsoft Power BI</strong>
+          </div>
+
+          <div class="snapshot-card">
+            <span>Odak</span>
+            <strong>Performans ve Karar Destek</strong>
+          </div>
+
+          <div class="snapshot-card">
+            <span>Rol</span>
+            <strong>Tasarım, Modelleme ve Raporlama</strong>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="genel-bakis">
+      <div class="container">
+
+        <div class="section-heading">
+          <h2>İş problemi</h2>
+
+          <p>
+            Yönetim raporlamasında farklı operasyonel ve finansal
+            perspektiflerin birbirinden kopuk raporlar yerine birlikte analiz
+            edilebilmesi gerekiyordu.
+          </p>
+        </div>
+
+        <div class="content-grid">
+
+          <article class="card">
+            <h3>Parçalı performans görünümleri</h3>
+
+            <p>
+              Üretim, komisyon, portföy gelişimi, satış sonuçları ve hedef
+              performansının tutarlı ve ortak bir raporlama yapısı üzerinden
+              izlenmesi gerekiyordu.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Detay analizi ihtiyacı</h3>
+
+            <p>
+              Üst seviye KPI'lar tek başına yeterli değildi. Kullanıcıların
+              yönetici özetlerinden branş, prodüktör, sigorta şirketi, müşteri
+              ve işlem detayına kadar inebilmesi gerekiyordu.
+            </p>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section id="cozum">
+      <div class="container">
+
+        <div class="section-heading">
+          <h2>Çözüm</h2>
+
+          <p>
+            Yönetim seviyesindeki KPI'ları detaylı operasyonel analizlerle
+            birleştiren yapılandırılmış bir Power BI raporlama ortamı
+            geliştirdim.
+          </p>
+        </div>
+
+        <ul class="feature-list">
+
+          <li>
+            <strong>Üretim ve Portföy Performansı</strong>
+            <span>
+              Net prim, komisyon, müşteri hacmi, portföy kaynakları ve
+              performans yılı analizleri.
+            </span>
+          </li>
+
+          <li>
+            <strong>Komisyon Analizi</strong>
+            <span>
+              Performans dönemi, sigorta branşı ve portföy kaynağı bazında
+              komisyon tutarı ve komisyon oranı analizi.
+            </span>
+          </li>
+
+          <li>
+            <strong>Hit Ratio Analizi</strong>
+            <span>
+              İç ve dış işler için sigorta branşı bazında aylık ve kümülatif
+              satış dönüşüm performansı.
+            </span>
+          </li>
+
+          <li>
+            <strong>Olumsuz Satış Nedenleri Analizi</strong>
+            <span>
+              Başarısız satışların neden, işlem adedi ve prim tutarı üzerinden
+              analiz edilmesi ve detay raporlarla desteklenmesi.
+            </span>
+          </li>
+
+          <li>
+            <strong>Bekleyen Satışların Takibi</strong>
+            <span>
+              Henüz satış sonucu oluşmamış işlerin işlem seviyesinde
+              izlenebilmesi.
+            </span>
+          </li>
+
+          <li>
+            <strong>Kazanılan ve Kaybedilen Büyük İşler</strong>
+            <span>
+              Yönetim takibi gerektiren yüksek değerli yenilemelerin ve önemli
+              satış sonuçlarının görünür hâle getirilmesi.
+            </span>
+          </li>
+
+          <li>
+            <strong>Hedef ve Gerçekleşen Performansı</strong>
+            <span>
+              Prim ve komisyon hedeflerinin sigorta branşları bazında
+              gerçekleşen sonuçlarla karşılaştırılması.
+            </span>
+          </li>
+
+        </ul>
+
+      </div>
+    </section>
+
+    <section id="yetkinlikler">
+      <div class="container">
+
+        <div class="section-heading">
+          <h2>Gösterilen yetkinlikler</h2>
+
+          <p>
+            Proje yalnızca dashboard görselleştirmesine değil; finansal bakış
+            açısı, veri modelleme ve iş zekâsı geliştirme yetkinliklerinin
+            birlikte kullanılmasına dayanıyor.
+          </p>
+        </div>
+
+        <div class="tags">
+          <span class="tag">Power BI</span>
+          <span class="tag">DAX</span>
+          <span class="tag">Veri Modelleme</span>
+          <span class="tag">Finansal Analiz</span>
+          <span class="tag">Yönetim Raporlaması</span>
+          <span class="tag">KPI Tasarımı</span>
+          <span class="tag">Sapma Analizi</span>
+          <span class="tag">Satış Analitiği</span>
+          <span class="tag">Portföy Analizi</span>
+          <span class="tag">Detay Analizi</span>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="gorseller">
+      <div class="container">
+
+        <div class="section-heading">
+          <h2>Seçilmiş rapor görünümleri</h2>
+
+          <p>
+            Çözümün kapsamını göstermek için tüm rapor sayfalarını yayımlamak
+            yerine dört temsilî ekran aşağıda gösterilmektedir. Tam
+            çözünürlükte görüntülemek için herhangi bir görsele tıklayabilirsin.
+          </p>
+        </div>
+
+        <div class="report-gallery">
+
+          <article class="report-visual">
+            <a
+              class="report-image-link"
+              href="/projects/psa-report/assets/01-executive-production-overview.png"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="/projects/psa-report/assets/01-executive-production-overview.png"
+                alt="Net prim, komisyon, portföy kaynakları ve performans yılı analizlerini gösteren Power BI üretim raporu özeti"
+                loading="lazy"
+              >
+            </a>
+
+            <div class="report-caption">
+              <h3>Yönetici Üretim Özeti</h3>
+
+              <p>
+                Net prim, komisyon, komisyon oranı, performans yılı analizi,
+                branş performansı ve portföy kaynağı kırılımlarını tek
+                görünümde bir araya getiren yönetici seviyesi üretim ve
+                portföy analizi.
+              </p>
+
+              <a
+                class="view-full"
+                href="/projects/psa-report/assets/01-executive-production-overview.png"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Tam boy raporu görüntüle ↗
+              </a>
+            </div>
+          </article>
+
+          <article class="report-visual">
+            <a
+              class="report-image-link"
+              href="/projects/psa-report/assets/02-hit-ratio-analysis.png"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="/projects/psa-report/assets/02-hit-ratio-analysis.png"
+                alt="Aylık ve kümülatif iç ve dış satış dönüşüm performansını gösteren Power BI Hit Ratio analizi"
+                loading="lazy"
+              >
+            </a>
+
+            <div class="report-caption">
+              <h3>Hit Ratio Analizi</h3>
+
+              <p>
+                İç ve dış işler ile sigorta branşlarında başarılı ve başarısız
+                işlemleri karşılaştıran aylık ve kümülatif satış dönüşüm
+                performansı raporlaması.
+              </p>
+
+              <a
+                class="view-full"
+                href="/projects/psa-report/assets/02-hit-ratio-analysis.png"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Tam boy raporu görüntüle ↗
+              </a>
+            </div>
+          </article>
+
+          <article class="report-visual">
+            <a
+              class="report-image-link"
+              href="/projects/psa-report/assets/03-loss-reason-analysis.png"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="/projects/psa-report/assets/03-loss-reason-analysis.png"
+                alt="Olumsuz satış nedenlerini prim tutarı ve işlem adedi üzerinden gösteren Power BI analizi"
+                loading="lazy"
+              >
+            </a>
+
+            <div class="report-caption">
+              <h3>Olumsuz Satış Nedenleri Analizi</h3>
+
+              <p>
+                Başarısız satışların temel nedenlerini hem prim tutarı hem de
+                işlem adedi üzerinden ölçen ve iç-dış iş ayrımını gösteren kök
+                neden analizi.
+              </p>
+
+              <a
+                class="view-full"
+                href="/projects/psa-report/assets/03-loss-reason-analysis.png"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Tam boy raporu görüntüle ↗
+              </a>
+            </div>
+          </article>
+
+          <article class="report-visual">
+            <a
+              class="report-image-link"
+              href="/projects/psa-report/assets/04-target-vs-actual-performance.png"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="/projects/psa-report/assets/04-target-vs-actual-performance.png"
+                alt="Prim ve komisyon hedeflerini gerçekleşen sonuçlarla karşılaştıran Power BI hedef gerçekleşen raporu"
+                loading="lazy"
+              >
+            </a>
+
+            <div class="report-caption">
+              <h3>Hedef ve Gerçekleşen Performansı</h3>
+
+              <p>
+                Prim ve komisyon hedeflerini gerçekleşen sonuçlar ve
+                gerçekleşme oranlarıyla sigorta branşı bazında karşılaştıran
+                FP&A odaklı performans görünümü.
+              </p>
+
+              <a
+                class="view-full"
+                href="/projects/psa-report/assets/04-target-vs-actual-performance.png"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Tam boy raporu görüntüle ↗
+              </a>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+
+        <div class="impact-box">
+          <h2>Karar destek değeri</h2>
+
+          <p>
+            Raporlama yapısı; üretim, komisyon, satış performansı ve hedefleri
+            tek bir analitik görünümde bir araya getirirken kullanıcıların
+            ihtiyaç hâlinde alttaki operasyonel detaylara kadar inebilmesini
+            sağlar. Ölçülebilir iş etkileri yalnızca proje verileriyle
+            doğrulanabildiği ölçüde portföye eklenecektir.
+          </p>
+
+          <div class="contact-buttons">
+            <a
+              class="button button-primary"
+              href="https://www.linkedin.com/in/aliavcii/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn üzerinden bağlantı kur
+            </a>
+
+            <a
+              class="button button-light"
+              href="mailto:aliavci@workmail.com"
+            >
+              aliavci@workmail.com
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      © 2026 Ali Avcı · FP&A · İş Zekâsı · Otomasyon · Uygulamalı Yapay Zekâ
+    </div>
+  </footer>
+
+</body>
+</html>
