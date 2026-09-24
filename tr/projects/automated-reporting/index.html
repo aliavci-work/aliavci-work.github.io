@@ -1,1 +1,909 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>Otomatik Finansal ve Operasyonel Raporlama | Ali Avcı</title>
+
+  <meta
+    name="description"
+    content="Ali Avcı tarafından geliştirilen; MySQL, Python, Django, Excel otomasyonu ve otomatik e-posta dağıtımını kullanan finansal ve operasyonel raporlama vaka çalışması."
+  >
+
+  <link
+    rel="canonical"
+    href="https://aliavci-work.github.io/tr/projects/automated-reporting/"
+  >
+
+  <link
+    rel="alternate"
+    hreflang="en"
+    href="https://aliavci-work.github.io/projects/automated-reporting/"
+  >
+
+  <link
+    rel="alternate"
+    hreflang="tr"
+    href="https://aliavci-work.github.io/tr/projects/automated-reporting/"
+  >
+
+  <style>
+    :root {
+      --background: #f5f7fa;
+      --surface: #ffffff;
+      --text: #172033;
+      --muted: #5e6b7e;
+      --primary: #155eef;
+      --primary-dark: #0f46b8;
+      --border: #dfe5ec;
+      --tag: #eaf1ff;
+      --max-width: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(92%, var(--max-width));
+      margin: 0 auto;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav {
+      min-height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .brand {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .language-switch {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      background: var(--surface);
+    }
+
+    .language-switch strong {
+      color: var(--primary);
+    }
+
+    .language-switch a {
+      color: var(--muted);
+    }
+
+    .language-switch a:hover {
+      color: var(--primary);
+    }
+
+    .hero {
+      padding: 100px 0 70px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 30px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .eyebrow {
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      max-width: 950px;
+      font-size: clamp(2.7rem, 7vw, 5rem);
+      line-height: 1.04;
+      letter-spacing: -0.045em;
+      margin-bottom: 28px;
+    }
+
+    .hero-description {
+      max-width: 830px;
+      font-size: 1.2rem;
+      color: var(--muted);
+    }
+
+    section {
+      padding: 72px 0;
+    }
+
+    .section-heading {
+      margin-bottom: 32px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 10px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      max-width: 790px;
+    }
+
+    .snapshot {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 42px;
+    }
+
+    .snapshot-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+    }
+
+    .snapshot-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-bottom: 7px;
+    }
+
+    .snapshot-card strong {
+      font-size: 1rem;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 30px;
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+      font-size: 1.3rem;
+    }
+
+    .card p {
+      color: var(--muted);
+    }
+
+    .feature-list {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+    }
+
+    .feature-list li {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 22px;
+    }
+
+    .feature-list strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .feature-list span {
+      color: var(--muted);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 26px;
+    }
+
+    .tag {
+      background: var(--tag);
+      color: var(--primary-dark);
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 0.83rem;
+      font-weight: 700;
+    }
+
+    .report-gallery {
+      display: grid;
+      gap: 34px;
+      margin-top: 30px;
+    }
+
+    .report-visual {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .report-image-link {
+      display: block;
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .report-image-link img {
+      display: block;
+      width: 100%;
+      height: auto;
+      transition: transform 0.25s ease;
+    }
+
+    .report-image-link:hover img {
+      transform: scale(1.01);
+    }
+
+    .report-caption {
+      padding: 22px 24px 25px;
+      border-top: 1px solid var(--border);
+    }
+
+    .report-caption h3 {
+      font-size: 1.25rem;
+      margin-bottom: 7px;
+    }
+
+    .report-caption p {
+      color: var(--muted);
+      max-width: 900px;
+    }
+
+    .gain {
+      margin-top: 14px;
+      padding: 12px 14px;
+      background: #f8fbff;
+      border-left: 3px solid var(--primary);
+      border-radius: 7px;
+      color: var(--text) !important;
+    }
+
+    .gain strong {
+      color: var(--primary-dark);
+    }
+
+    .view-full {
+      display: inline-block;
+      margin-top: 12px;
+      color: var(--primary);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .contact-box {
+      background: var(--text);
+      color: #ffffff;
+      border-radius: 18px;
+      padding: 46px;
+    }
+
+    .contact-box p {
+      color: #cbd5e1;
+      max-width: 760px;
+      margin-top: 14px;
+    }
+
+    .contact-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 13px 21px;
+      border-radius: 8px;
+      font-weight: 700;
+      border: 1px solid var(--primary);
+    }
+
+    .button-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .button-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .button-light {
+      color: #ffffff;
+      border-color: #ffffff;
+    }
+
+    .button-light:hover {
+      background: #ffffff;
+      color: var(--text);
+    }
+
+    footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 850px) {
+      .nav-links {
+        display: none;
+      }
+
+      .snapshot {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .snapshot {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 70px 0 50px;
+      }
+
+      section {
+        padding: 55px 0;
+      }
+
+      .contact-box {
+        padding: 30px;
+      }
+
+      .report-caption {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <nav class="container">
+
+      <a class="brand" href="/tr/">Ali Avcı</a>
+
+      <div class="nav-right">
+
+        <div class="nav-links">
+          <a href="#overview">Genel Bakış</a>
+          <a href="#solution">Çözüm</a>
+          <a href="#capabilities">Yetkinlikler</a>
+          <a href="#visuals">Görseller</a>
+        </div>
+
+        <div class="language-switch">
+          <a href="/projects/automated-reporting/">EN</a>
+          <span>|</span>
+          <strong>TR</strong>
+        </div>
+
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="container">
+
+        <a class="back-link" href="/tr/#projects">
+          ← Seçilmiş projelere dön
+        </a>
+
+        <p class="eyebrow">
+          PYTHON · MYSQL · EXCEL OTOMASYONU · RAPORLAMA
+        </p>
+
+        <h1>
+          Otomatik Finansal ve Operasyonel Raporlama Akışı
+        </h1>
+
+        <p class="hero-description">
+          Operasyonel verileri yapılandırılmış Excel raporlarına dönüştüren
+          ve tamamlanan çıktıyı ilgili kullanıcılara otomatik olarak dağıtan
+          uçtan uca bir raporlama iş akışı.
+        </p>
+
+        <div class="snapshot">
+
+          <div class="snapshot-card">
+            <span>Proje Türü</span>
+            <strong>Raporlama Otomasyonu</strong>
+          </div>
+
+          <div class="snapshot-card">
+            <span>Ana Teknoloji</span>
+            <strong>Python / Django</strong>
+          </div>
+
+          <div class="snapshot-card">
+            <span>Veri Kaynağı</span>
+            <strong>MySQL</strong>
+          </div>
+
+          <div class="snapshot-card">
+            <span>Çıktı</span>
+            <strong>Excel ve E-posta</strong>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section id="overview">
+      <div class="container">
+
+        <div class="section-heading">
+
+          <h2>İş problemi</h2>
+
+          <p>
+            Operasyonel raporlama; tekrarlayan veri kontrolleri, iş kurallarına
+            göre filtreleme, Excel dosyalarının hazırlanması ve raporların
+            dağıtılması gibi birden fazla adımdan oluşuyordu. Bu işlemlerin
+            manuel yapılması tekrarlayan iş yükü oluşturuyor ve raporların
+            tutarlılığını riske atıyordu.
+          </p>
+
+        </div>
+
+        <div class="content-grid">
+
+          <article class="card">
+
+            <h3>Tekrarlayan operasyonel raporlama</h3>
+
+            <p>
+              Kullanıcıların belirlenen tarihlere, süreç durumlarına ve iş
+              kriterlerine göre açık ve bekleyen işlemleri düzenli olarak
+              görebilmesi gerekiyordu.
+            </p>
+
+          </article>
+
+          <article class="card">
+
+            <h3>Tutarlı iş kuralları</h3>
+
+            <p>
+              Rapor her üretildiğinde aynı filtreleme, önceliklendirme ve
+              sınıflandırma kurallarının eksiksiz biçimde uygulanması
+              gerekiyordu.
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section id="solution">
+      <div class="container">
+
+        <div class="section-heading">
+
+          <h2>Çözüm</h2>
+
+          <p>
+            Operasyonel veriyi, Python tabanlı veri işleme sürecini,
+            iş kurallarını, yapılandırılmış Excel raporlamasını ve
+            otomatik e-posta dağıtımını tek bir iş akışında birleştiren
+            raporlama sistemi geliştirdim.
+          </p>
+
+        </div>
+
+        <ul class="feature-list">
+
+          <li>
+
+            <strong>Veritabanından veri alma</strong>
+
+            <span>
+              Operasyonel kayıtlar MySQL üzerinden alınarak raporlama
+              süreci için hazırlanır.
+            </span>
+
+          </li>
+
+          <li>
+
+            <strong>Python tabanlı iş kuralları</strong>
+
+            <span>
+              Tarih kuralları, işlem durumları, öncelikler ve raporlama
+              kriterleri kod üzerinden otomatik olarak uygulanır.
+            </span>
+
+          </li>
+
+          <li>
+
+            <strong>Otomatik Excel raporu oluşturma</strong>
+
+            <span>
+              İşlenen kayıtlar; yönetim özeti ve gerekli destekleyici
+              detayları içeren yapılandırılmış Excel raporlarına dönüştürülür.
+            </span>
+
+          </li>
+
+          <li>
+
+            <strong>Raporlama kontrolleri</strong>
+
+            <span>
+              Raporlama kriterleri standartlaştırılarak aynı iş mantığının
+              her çalıştırmada tutarlı biçimde uygulanması sağlanır.
+            </span>
+
+          </li>
+
+          <li>
+
+            <strong>Otomatik dağıtım</strong>
+
+            <span>
+              Tamamlanan Excel raporları otomatik e-posta iş akışı
+              üzerinden ilgili kullanıcılara gönderilir.
+            </span>
+
+          </li>
+
+        </ul>
+
+      </div>
+    </section>
+
+    <section id="capabilities">
+      <div class="container">
+
+        <div class="section-heading">
+
+          <h2>Gösterilen yetkinlikler</h2>
+
+          <p>
+            Bu proje yalnızca tek bir Excel işleminin otomatikleştirilmesini
+            değil; veri alma, programlama, raporlama kontrolleri ve operasyonel
+            dağıtımı bir araya getiren uçtan uca bir otomasyon yapısını gösteriyor.
+          </p>
+
+        </div>
+
+        <div class="tags">
+
+          <span class="tag">Python</span>
+          <span class="tag">Django</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">Pandas</span>
+          <span class="tag">Excel Otomasyonu</span>
+          <span class="tag">E-posta Otomasyonu</span>
+          <span class="tag">İş Kuralları</span>
+          <span class="tag">Operasyonel Raporlama</span>
+          <span class="tag">İş Akışı Otomasyonu</span>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section id="visuals">
+      <div class="container">
+
+        <div class="section-heading">
+
+          <h2>Raporlama süreci nasıl çalışıyor?</h2>
+
+          <p>
+            Aşağıdaki görseller, raporlama sürecinin veri akışından ve
+            Python ile uygulanan iş mantığından başlayarak oluşturulan
+            Excel raporuna ve son olarak otomatik e-posta dağıtımına kadar
+            nasıl ilerlediğini gösteriyor.
+          </p>
+
+        </div>
+
+        <div class="report-gallery">
+
+          <article class="report-visual">
+
+            <a
+              class="report-image-link"
+              href="/projects/automated-reporting/assets/01-reporting-workflow.png"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+
+              <img
+                src="/projects/automated-reporting/assets/01-reporting-workflow.png"
+                alt="MySQL veritabanından Python ve Django üzerinden Excel raporu ve e-posta dağıtımına uzanan otomatik finansal ve operasyonel raporlama süreci"
+              >
+
+            </a>
+
+            <div class="report-caption">
+
+              <h3>Uçtan Uca Raporlama Akışı</h3>
+
+              <p>
+                Operasyonel veri MySQL üzerinden alınır; Python ve Django ile
+                işlenir, gerekli iş kuralları ve filtreler uygulanır, ardından
+                Excel raporu oluşturularak e-posta ile dağıtılır.
+              </p>
+
+              <p class="gain">
+                <strong>Kazanım:</strong>
+                Veri kaynağından son kullanıcıya kadar tüm raporlama süreci
+                tek bir otomatik akış içinde ilerler ve aynı manuel işlemlerin
+                tekrar tekrar yapılmasına gerek kalmaz.
+              </p>
+
+              <a
+                class="view-full"
+                href="/projects/automated-reporting/assets/01-reporting-workflow.png"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Tam boy görseli görüntüle ↗
+              </a>
+
+            </div>
+
+          </article>
+
+          <article class="report-visual">
+
+            <a
+              class="report-image-link"
+              href="/projects/automated-reporting/assets/02-python-processing.png"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+
+              <img
+                src="/projects/automated-reporting/assets/02-python-processing.png"
+                alt="Otomatik raporlama sürecinde kullanılan Python veri işleme ve iş kuralları"
+                loading="lazy"
+              >
+
+            </a>
+
+            <div class="report-caption">
+
+              <h3>Python ile İşleme ve İş Kuralları</h3>
+
+              <p>
+                Python operasyonel veri kaynağına bağlanır ve rapor
+                oluşturulmadan önce işlem durumu, tarih, öncelik ve
+                mükerrer kayıt kontrolleri gibi raporlama kurallarını uygular.
+              </p>
+
+              <p class="gain">
+                <strong>Kazanım:</strong>
+                İnsanların her raporda tek tek kontrol edeceği kurallar,
+                kod tarafından her seferinde aynı şekilde uygulanır.
+              </p>
+
+              <a
+                class="view-full"
+                href="/projects/automated-reporting/assets/02-python-processing.png"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Tam boy görseli görüntüle ↗
+              </a>
+
+            </div>
+
+          </article>
+
+          <article class="report-visual">
+
+            <a
+              class="report-image-link"
+              href="/projects/automated-reporting/assets/03-generated-excel-report.jpg"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+
+              <img
+                src="/projects/automated-reporting/assets/03-generated-excel-report.jpg"
+                alt="Otomatik olarak oluşturulan Excel operasyonel rapor özeti"
+                loading="lazy"
+              >
+
+            </a>
+
+            <div class="report-caption">
+
+              <h3>Otomatik Oluşturulan Excel Raporu</h3>
+
+              <p>
+                İşlenen veriler, operasyonel durumun hızlı şekilde
+                incelenebilmesi için özet görünüm içeren yapılandırılmış
+                bir Excel raporuna dönüştürülür.
+              </p>
+
+              <p class="gain">
+                <strong>Kazanım:</strong>
+                Kullanıcılar ham veriyi kendileri düzenlemek yerine,
+                incelemeye hazır bir Excel raporu alır.
+              </p>
+
+              <a
+                class="view-full"
+                href="/projects/automated-reporting/assets/03-generated-excel-report.jpg"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Tam boy görseli görüntüle ↗
+              </a>
+
+            </div>
+
+          </article>
+
+          <article class="report-visual">
+
+            <a
+              class="report-image-link"
+              href="/projects/automated-reporting/assets/04-automated-email-delivery.jpg"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+
+              <img
+                src="/projects/automated-reporting/assets/04-automated-email-delivery.jpg"
+                alt="Excel operasyonel raporunun otomatik e-posta ile dağıtılması"
+                loading="lazy"
+              >
+
+            </a>
+
+            <div class="report-caption">
+
+              <h3>Otomatik Rapor Dağıtımı</h3>
+
+              <p>
+                Rapor oluşturulduktan sonra Excel dosyası otomatik olarak
+                e-postaya eklenir ve ilgili kullanıcılara dağıtılır.
+              </p>
+
+              <p class="gain">
+                <strong>Kazanım:</strong>
+                Hazırlanan rapor kullanıcılarına kendiliğinden ulaşır;
+                dosyayı ayrıca hazırlayıp e-postayla gönderme işi ortadan kalkar.
+              </p>
+
+              <a
+                class="view-full"
+                href="/projects/automated-reporting/assets/04-automated-email-delivery.jpg"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Tam boy görseli görüntüle ↗
+              </a>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+
+        <div class="contact-box">
+
+          <h2>İletişim</h2>
+
+          <p>
+            İletişim için aşağıdaki kanallardan bana ulaşabilirsiniz.
+          </p>
+
+          <div class="contact-buttons">
+
+            <a
+              class="button button-primary"
+              href="https://www.linkedin.com/in/aliavcii/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn üzerinden bağlantı kur
+            </a>
+
+            <a
+              class="button button-light"
+              href="mailto:aliavci@workmail.com"
+            >
+              aliavci@workmail.com
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      © 2026 Ali Avcı · FP&A · İş Zekâsı · Otomasyon · Uygulamalı Yapay Zekâ
+    </div>
+  </footer>
+
+</body>
+</html>
