@@ -1,1 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>Automated Finance & Operational Reporting | Ali Avcı</title>
+
+  <meta
+    name="description"
+    content="An automated finance and operational reporting case study by Ali Avcı using MySQL, Python, Django, Excel automation and automated email distribution."
+  >
+
+  <link
+    rel="canonical"
+    href="https://aliavci-work.github.io/projects/automated-reporting/"
+  >
+
+  <style>
+    :root {
+      --background: #f5f7fa;
+      --surface: #ffffff;
+      --text: #172033;
+      --muted: #5e6b7e;
+      --primary: #155eef;
+      --primary-dark: #0f46b8;
+      --border: #dfe5ec;
+      --tag: #eaf1ff;
+      --max-width: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(92%, var(--max-width));
+      margin: 0 auto;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav {
+      min-height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .brand {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .language-switch {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      background: var(--surface);
+    }
+
+    .language-switch strong {
+      color: var(--primary);
+    }
+
+    .language-switch a {
+      color: var(--muted);
+    }
+
+    .language-switch a:hover {
+      color: var(--primary);
+    }
+
+    .hero {
+      padding: 100px 0 70px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 30px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .eyebrow {
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      max-width: 950px;
+      font-size: clamp(2.7rem, 7vw, 5rem);
+      line-height: 1.04;
+      letter-spacing: -0.045em;
+      margin-bottom: 28px;
+    }
+
+    .hero-description {
+      max-width: 830px;
+      font-size: 1.2rem;
+      color: var(--muted);
+    }
+
+    section {
+      padding: 72px 0;
+    }
+
+    .section-heading {
+      margin-bottom: 32px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 10px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      max-width: 790px;
+    }
+
+    .snapshot {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 42px;
+    }
+
+    .snapshot-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+    }
+
+    .snapshot-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-bottom: 7px;
+    }
+
+    .snapshot-card strong {
+      font-size: 1rem;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 30px;
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+      font-size: 1.3rem;
+    }
+
+    .card p {
+      color: var(--muted);
+    }
+
+    .feature-list {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+    }
+
+    .feature-list li {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 22px;
+    }
+
+    .feature-list strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .feature-list span {
+      color: var(--muted);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 26px;
+    }
+
+    .tag {
+      background: var(--tag);
+      color: var(--primary-dark);
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 0.83rem;
+      font-weight: 700;
+    }
+
+    .report-gallery {
+      display: grid;
+      gap: 34px;
+      margin-top: 30px;
+    }
+
+    .report-visual {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .report-image-link {
+      display: block;
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .report-image-link img {
+      display: block;
+      width: 100%;
+      height: auto;
+      transition: transform 0.25s ease;
+    }
+
+    .report-image-link:hover img {
+      transform: scale(1.01);
+    }
+
+    .report-caption {
+      padding: 22px 24px 25px;
+      border-top: 1px solid var(--border);
+    }
+
+    .report-caption h3 {
+      font-size: 1.25rem;
+      margin-bottom: 7px;
+    }
+
+    .report-caption p {
+      color: var(--muted);
+      max-width: 900px;
+    }
+
+    .gain {
+      margin-top: 14px;
+      padding: 12px 14px;
+      background: #f8fbff;
+      border-left: 3px solid var(--primary);
+      border-radius: 7px;
+      color: var(--text) !important;
+    }
+
+    .gain strong {
+      color: var(--primary-dark);
+    }
+
+    .view-full {
+      display: inline-block;
+      margin-top: 12px;
+      color: var(--primary);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .contact-box {
+      background: var(--text);
+      color: #ffffff;
+      border-radius: 18px;
+      padding: 46px;
+    }
+
+    .contact-box p {
+      color: #cbd5e1;
+      max-width: 760px;
+      margin-top: 14px;
+    }
+
+    .contact-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 13px 21px;
+      border-radius: 8px;
+      font-weight: 700;
+      border: 1px solid var(--primary);
+    }
+
+    .button-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .button-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .button-light {
+      color: #ffffff;
+      border-color: #ffffff;
+    }
+
+    .button-light:hover {
+      background: #ffffff;
+      color: var(--text);
+    }
+
+    footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 850px) {
+      .nav-links {
+        display: none;
+      }
+
+      .snapshot {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .snapshot {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 70px 0 50px;
+      }
+
+      section {
+        padding: 55px 0;
+      }
+
+      .contact-box {
+        padding: 30px;
+      }
+
+      .report-caption {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <nav class="container">
+      <a class="brand" href="/">Ali Avcı</a>
+
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#overview">Overview</a>
+          <a href="#solution">Solution</a>
+          <a href="#capabilities">Capabilities</a>
+          <a href="#visuals">Visuals</a>
+        </div>
+
+        <div class="language-switch">
+          <strong>EN</strong>
+          <span>|</span>
+          <a href="/tr/projects/automated-reporting/">TR</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="container">
+
+        <a class="back-link" href="/#projects">
+          ← Back to selected projects
+        </a>
+
+        <p class="eyebrow">
+          PYTHON · MYSQL · EXCEL AUTOMATION · REPORTING
+        </p>
+
+        <h1>
+          Automated Finance & Operational Reporting Pipeline
+        </h1>
+
+        <p class="hero-description">
+          An end-to-end reporting workflow that transforms operational data
+          into structured Excel reports and automatically distributes the
+          finished output to the relevant users.
+        </p>
+
+        <div class="snapshot">
+
+          <div class="snapshot-card">
+            <span>Project Type</span>
+            <strong>Reporting Automation</strong>
+          </div>
+
+          <div class="snapshot-card">
+            <span>Core Technology</span>
+            <strong>Python / Django</strong>
+          </div>
+
+          <div class="snapshot-card">
+            <span>Data Source</span>
+            <strong>MySQL</strong>
+          </div>
+
+          <div class="snapshot-card">
+            <span>Output</span>
+            <strong>Excel & Email</strong>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section id="overview">
+      <div class="container">
+
+        <div class="section-heading">
+          <h2>Business problem</h2>
+
+          <p>
+            Operational reporting required recurring data checks, business-rule
+            filtering, Excel preparation and report distribution. Performing
+            these steps manually created repetitive work and increased the risk
+            of inconsistent reporting.
+          </p>
+        </div>
+
+        <div class="content-grid">
+
+          <article class="card">
+            <h3>Recurring operational reporting</h3>
+
+            <p>
+              Users needed regular visibility into open and pending operational
+              items based on defined dates, process statuses and business
+              criteria.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Consistent business rules</h3>
+
+            <p>
+              Reporting logic needed to apply the same filtering,
+              prioritization and classification rules every time the report
+              was produced.
+            </p>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section id="solution">
+      <div class="container">
+
+        <div class="section-heading">
+          <h2>The solution</h2>
+
+          <p>
+            I built an automated reporting workflow that connects operational
+            data, Python-based processing, business rules, structured Excel
+            reporting and email distribution.
+          </p>
+        </div>
+
+        <ul class="feature-list">
+
+          <li>
+            <strong>Database extraction</strong>
+            <span>
+              Operational records are retrieved from MySQL and prepared for
+              processing.
+            </span>
+          </li>
+
+          <li>
+            <strong>Python-based business logic</strong>
+            <span>
+              Date rules, statuses, priorities and reporting criteria are
+              applied programmatically.
+            </span>
+          </li>
+
+          <li>
+            <strong>Automated Excel generation</strong>
+            <span>
+              Processed records are converted into structured Excel reports
+              containing management summaries and supporting detail.
+            </span>
+          </li>
+
+          <li>
+            <strong>Reporting controls</strong>
+            <span>
+              Reporting criteria are standardized so the same business logic
+              can be reproduced consistently.
+            </span>
+          </li>
+
+          <li>
+            <strong>Automated distribution</strong>
+            <span>
+              Completed Excel reports are delivered to the relevant users
+              through automated email workflows.
+            </span>
+          </li>
+
+        </ul>
+
+      </div>
+    </section>
+
+    <section id="capabilities">
+      <div class="container">
+
+        <div class="section-heading">
+          <h2>Capabilities demonstrated</h2>
+
+          <p>
+            The project combines data extraction, programming, reporting
+            controls and operational automation rather than automating only
+            a single Excel task.
+          </p>
+        </div>
+
+        <div class="tags">
+          <span class="tag">Python</span>
+          <span class="tag">Django</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">Pandas</span>
+          <span class="tag">Excel Automation</span>
+          <span class="tag">Email Automation</span>
+          <span class="tag">Business Rules</span>
+          <span class="tag">Operational Reporting</span>
+          <span class="tag">Workflow Automation</span>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="visuals">
+      <div class="container">
+
+        <div class="section-heading">
+          <h2>How the reporting pipeline works</h2>
+
+          <p>
+            The following views show the reporting process from the underlying
+            workflow and processing logic to the final Excel report and its
+            automated delivery.
+          </p>
+        </div>
+
+        <div class="report-gallery">
+
+          <article class="report-visual">
+
+            <a
+              class="report-image-link"
+              href="assets/01-reporting-workflow.png"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="assets/01-reporting-workflow.png"
+                alt="Automated finance and operational reporting workflow from MySQL through Python and Django to Excel and email"
+              >
+            </a>
+
+            <div class="report-caption">
+
+              <h3>End-to-End Reporting Workflow</h3>
+
+              <p>
+                Operational data moves from MySQL into Python and Django,
+                where business rules and filtering logic are applied before
+                an Excel report is produced and distributed by email.
+              </p>
+
+              <p class="gain">
+                <strong>Gain:</strong>
+                One automated flow takes the data from its source to the final
+                report without requiring the same manual steps to be repeated.
+              </p>
+
+              <a
+                class="view-full"
+                href="assets/01-reporting-workflow.png"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View full-size image ↗
+              </a>
+
+            </div>
+          </article>
+
+          <article class="report-visual">
+
+            <a
+              class="report-image-link"
+              href="assets/02-python-processing.png"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="assets/02-python-processing.png"
+                alt="Python processing logic used in the automated reporting workflow"
+                loading="lazy"
+              >
+            </a>
+
+            <div class="report-caption">
+
+              <h3>Python Processing & Business Logic</h3>
+
+              <p>
+                Python connects to the operational data source and applies
+                reporting rules such as process status, dates, priorities
+                and duplicate handling before report generation.
+              </p>
+
+              <p class="gain">
+                <strong>Gain:</strong>
+                The same reporting rules are applied consistently by code
+                instead of being checked manually each time.
+              </p>
+
+              <a
+                class="view-full"
+                href="assets/02-python-processing.png"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View full-size image ↗
+              </a>
+
+            </div>
+          </article>
+
+          <article class="report-visual">
+
+            <a
+              class="report-image-link"
+              href="assets/03-generated-excel-report.png"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="assets/03-generated-excel-report.png"
+                alt="Automatically generated Excel operational reporting summary"
+                loading="lazy"
+              >
+            </a>
+
+            <div class="report-caption">
+
+              <h3>Automatically Generated Excel Report</h3>
+
+              <p>
+                The processed data is transformed into a structured Excel
+                report containing a summary view designed for quick
+                operational review.
+              </p>
+
+              <p class="gain">
+                <strong>Gain:</strong>
+                Users receive a ready-to-use report instead of building the
+                summary manually from raw data.
+              </p>
+
+              <a
+                class="view-full"
+                href="assets/03-generated-excel-report.png"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View full-size image ↗
+              </a>
+
+            </div>
+          </article>
+
+          <article class="report-visual">
+
+            <a
+              class="report-image-link"
+              href="assets/04-automated-email-delivery.png"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="assets/04-automated-email-delivery.png"
+                alt="Automated email distribution of an Excel operational report"
+                loading="lazy"
+              >
+            </a>
+
+            <div class="report-caption">
+
+              <h3>Automated Report Distribution</h3>
+
+              <p>
+                Once report generation is complete, the Excel output is
+                attached to an automated email and distributed to the
+                relevant users.
+              </p>
+
+              <p class="gain">
+                <strong>Gain:</strong>
+                The finished report reaches its users automatically, reducing
+                manual sending and follow-up work.
+              </p>
+
+              <a
+                class="view-full"
+                href="assets/04-automated-email-delivery.png"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View full-size image ↗
+              </a>
+
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+
+        <div class="contact-box">
+
+          <h2>Contact</h2>
+
+          <p>
+            You can reach me through the channels below.
+          </p>
+
+          <div class="contact-buttons">
+
+            <a
+              class="button button-primary"
+              href="https://www.linkedin.com/in/aliavcii/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Connect on LinkedIn
+            </a>
+
+            <a
+              class="button button-light"
+              href="mailto:aliavci@workmail.com"
+            >
+              aliavci@workmail.com
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      © 2026 Ali Avcı · FP&A · Business Intelligence · Automation · Applied AI
+    </div>
+  </footer>
+
+</body>
+</html>
